@@ -8,25 +8,23 @@ export default function Home() {
 
   useEffect(() => {
     async function query(data: any) {
-      const response = await fetch(
-        "https://api-inference.huggingface.co/models/runwayml/stable-diffusion-v1-5",
-        {
-          headers: {
-            Authorization: "Bearer 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"
-          },
-          method: "POST",
-          body: JSON.stringify(data)
-        }
-      );
+      const response = await fetch("/api/models/stable-diffusion", {
+        headers: {
+          Authorization: "Bearer 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"
+        },
+        method: "POST",
+        body: JSON.stringify(data)
+      });
+
       const result = await response.blob();
       return result;
     }
-    query({ inputs: "Astronaut riding a horse" }).then((response) => {
+
+    query({ inputs: "A rare pokemon" }).then((response) => {
       console.log(response);
       const url = URL.createObjectURL(response);
       console.log(url);
       setImage(url);
-      // return () => URL.revokeObjectURL(url);
     });
   }, []);
 
