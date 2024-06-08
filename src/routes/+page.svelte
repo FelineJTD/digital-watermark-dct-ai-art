@@ -21,13 +21,13 @@
 		to your new<br />SvelteKit app
 	</h1>
 
-	<h2>
+	<h2 class="text-blue-600">
 		try editing <strong>src/routes/+page.svelte</strong>
 	</h2>
 
 	<Counter />
 </section>
-
+<!-- 
 <style>
 	section {
 		display: flex;
@@ -56,4 +56,4 @@
 		top: 0;
 		display: block;
 	}
-</style>
+</style> -->
