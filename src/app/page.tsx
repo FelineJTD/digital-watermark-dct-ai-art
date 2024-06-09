@@ -53,33 +53,45 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen w-full flex-col relative bg-neutral-900">
+    <main className="min-h-screen w-full flex-col relative bg-neutral-900 px-6 lg:px-18 xl:px-24">
       {/* BACKGROUND DECORATIVES */}
       <div className="bg-[url('/images/grain.png')] bg-repeat w-full h-full fixed top-0 left-0" />
       <Image
         src="/images/background.svg"
         alt=""
         fill
-        className="object-cover fixed bottom-0"
+        className="object-cover fixed bottom-0 object-bottom"
       />
       {/* MAIN CONTENT */}
-      <div className="flex relative z-10 ">
+      <div className="flex relative z-10 min-h-screen">
         {/* PICK MODEL */}
-        <div className="flex flex-col items-start min-w-fit w-60">
-          <h2 className="uppercase mb-4 text-neutral-300">Models</h2>
-          <div className="flex flex-col items-start gap-4">
-            {Models.map((m, index) => (
-              <button key={index} onClick={() => setModel(index)}>
-                <span
-                  className={`${
-                    index === model ? "text-xl text-primary" : ""
-                  } `}
+        <div className="flex flex-col items-start min-w-fit w-60 gap-6 min-h-full">
+          <div className="mx-6 h-32 w-1 bg-neutral-400" />
+          <div>
+            <h2 className="uppercase mb-2 text-neutral-300 tracking-wider font-bold">
+              Models
+            </h2>
+            <div className="flex flex-col items-start">
+              {Models.map((m, index) => (
+                <button
+                  key={index}
+                  onClick={() => setModel(index)}
+                  className="group py-2"
                 >
-                  {m.name}
-                </span>
-              </button>
-            ))}
+                  <span
+                    className={`${
+                      index === model
+                        ? "text-3xl text-primary font-medium"
+                        : "group-hover:text-xl duration-200"
+                    } `}
+                  >
+                    {m.name}
+                  </span>
+                </button>
+              ))}
+            </div>
           </div>
+          <div className="mx-6 h-full w-1 bg-neutral-400" />
         </div>
         {/* GENERATE */}
         <div className="flex flex-col items-center justify-center m-auto">
@@ -99,14 +111,14 @@ export default function Home() {
               Generate
             </Button>
           </form>
-          {image && (
-            <div className="flex flex-col items-end">
+          {image ? (
+            <div className="flex flex-col items-end mt-12">
               <Image
                 src={image}
                 alt="Generated AI image"
                 width={600}
                 height={600}
-                className="rounded-2xl mt-12 object-contain"
+                className="rounded-2xl object-contain"
               />
               <div className="flex mt-6 justify-between w-full">
                 <div>
@@ -121,17 +133,29 @@ export default function Home() {
                 </Button>
               </div>
             </div>
+          ) : (
+            <div className="flex flex-col items-center justify-center size-[600px] aspect-square bg-neutral-700/30 rounded-2xl mt-12">
+              <p className="text-neutral-200">No image generated yet</p>
+            </div>
           )}
         </div>
         {/* PICK SIGNATURE ALGORITHM */}
         <div className="w-60">
-          <h2 className="uppercase mb-4 text-neutral-300">Signatures</h2>
-          <div className="flex flex-col items-end gap-4">
+          <h2 className="uppercase mb-4 text-neutral-300 tracking-wider font-bold">
+            Signatures
+          </h2>
+          <div className="flex flex-col items-end">
             {Signatures.map((s, index) => (
-              <button key={index} onClick={() => setSignature(index)}>
+              <button
+                key={index}
+                onClick={() => setSignature(index)}
+                className="group py-2"
+              >
                 <span
                   className={`${
-                    index === signature ? "text-xl text-primary" : ""
+                    index === signature
+                      ? "text-3xl text-primary font-medium"
+                      : "group-hover:text-xl duration-200"
                   } `}
                 >
                   {s.name}

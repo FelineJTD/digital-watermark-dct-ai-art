@@ -24,7 +24,7 @@ export default function Button({
       }}
     >
       <button
-        className={`py-3 px-6 rounded-full uppercase flex items-center ${
+        className={`py-3 px-6 rounded-full uppercase flex items-center font-medium tracking-wider ${
           variant === "primary"
             ? "bg-primary text-neutral-900 enabled:hover:bg-neutral-700 enabled:hover:text-primary duration-200"
             : "text-primary border border-primary bg-transparent enabled:hover:bg-primary enabled:hover:text-neutral-900 duration-200"

@@ -2,7 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+@font-face {
+  font-family: "Lufga-Medium";
+  src: url("/fonts/LufgaMedium.ttf");
+}
+
+@font-face {
+  font-family: "Lufga-Light";
+  src: url("/fonts/LufgaLight.ttf");
+}
+
+html {
+  font-size: 16px;
+  color: #f5f5f5;
+  font-family: "Lufga-Light", sans-serif;
+}
+
+.font-medium {
+  font-family: "Lufga-Medium", sans-serif;
+}
+
+/* :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
@@ -30,4 +50,4 @@ body {
   .text-balance {
     text-wrap: balance;
   }
-}
+} */
