@@ -3,11 +3,15 @@
 import { Button } from "@/components/ui";
 import { Download, MagicWand } from "@phosphor-icons/react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import Models from "@/data/models.json";
+import Signatures from "@/data/signatures.json";
 
 export default function Home() {
   const [image, setImage] = useState<string | null>(null);
   const [time, setTime] = useState<number | null>(null);
+  const [model, setModel] = useState<number>(0);
+  const [signature, setSignature] = useState<number>(0);
 
   async function generate(api: string, body: any) {
     const start = Date.now();
@@ -27,32 +31,26 @@ export default function Home() {
 
     const data = new FormData(event.currentTarget);
 
-    generate("/api/models/stable-diffusion", {
-      inputs: data.get("prompt")
+    generate(`/api/models/${Models[model].api}`, {
+      signature: Signatures[signature].name,
+      prompt: {
+        inputs: data.get("prompt")
+      }
     }).then((response) => {
+      console.log(response);
       const url = URL.createObjectURL(response);
       setImage(url);
     });
   };
 
-  useEffect(() => {
-    async function query(data: any) {
-      const response = await fetch("/api/models/stable-diffusion", {
-        method: "POST",
-        body: JSON.stringify(data)
-      });
+  const handleDownload = () => {
+    if (!image) return;
 
-      const result = await response.blob();
-      return result;
-    }
-
-    query({ inputs: "A rare pokemon" }).then((response) => {
-      console.log(response);
-      const url = URL.createObjectURL(response);
-      console.log(url);
-      setImage(url);
-    });
-  }, []);
+    const a = document.createElement("a");
+    a.href = image;
+    a.download = "generated-image.png";
+    a.click();
+  };
 
   return (
     <main className="min-h-screen w-full flex-col relative bg-neutral-900">
@@ -65,11 +63,26 @@ export default function Home() {
         className="object-cover fixed bottom-0"
       />
       {/* MAIN CONTENT */}
-      <div className="flex">
+      <div className="flex relative z-10 ">
         {/* PICK MODEL */}
-        <div></div>
+        <div className="flex flex-col items-start min-w-fit w-60">
+          <h2 className="uppercase mb-4 text-neutral-300">Models</h2>
+          <div className="flex flex-col items-start gap-4">
+            {Models.map((m, index) => (
+              <button key={index} onClick={() => setModel(index)}>
+                <span
+                  className={`${
+                    index === model ? "text-xl text-primary" : ""
+                  } `}
+                >
+                  {m.name}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
         {/* GENERATE */}
-        <div className="relative z-10 flex flex-col items-center justify-center">
+        <div className="flex flex-col items-center justify-center m-auto">
           <form className="flex w-full" onSubmit={handleSubmission}>
             <input
               type="text"
@@ -92,7 +105,7 @@ export default function Home() {
                 src={image}
                 alt="Generated AI image"
                 width={600}
-                height={400}
+                height={600}
                 className="rounded-2xl mt-12 object-contain"
               />
               <div className="flex mt-6 justify-between w-full">
@@ -102,13 +115,30 @@ export default function Home() {
                 <Button
                   variant="secondary"
                   icon={<Download />}
-                  // onClick={() => setImage(null)}
+                  onClick={handleDownload}
                 >
                   Download
                 </Button>
               </div>
             </div>
           )}
+        </div>
+        {/* PICK SIGNATURE ALGORITHM */}
+        <div className="w-60">
+          <h2 className="uppercase mb-4 text-neutral-300">Signatures</h2>
+          <div className="flex flex-col items-end gap-4">
+            {Signatures.map((s, index) => (
+              <button key={index} onClick={() => setSignature(index)}>
+                <span
+                  className={`${
+                    index === signature ? "text-xl text-primary" : ""
+                  } `}
+                >
+                  {s.name}
+                </span>
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </main>

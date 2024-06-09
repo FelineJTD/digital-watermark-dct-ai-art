@@ -6,13 +6,13 @@ export async function POST(request: NextRequest) {
   const req = await request.json();
 
   const response = await fetch(
-    "https://api-inference.huggingface.co/models/runwayml/stable-diffusion-v1-5",
+    "https://api-inference.huggingface.co/models/Corcelio/mobius",
     {
       headers: {
         Authorization: "Bearer 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"
       },
       method: "POST",
-      body: JSON.stringify(req.prompt)
+      body: JSON.stringify(req)
     }
   );
 
