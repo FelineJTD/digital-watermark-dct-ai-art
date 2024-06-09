@@ -5,6 +5,8 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
+  const start = Date.now();
+
   const req = await request.json();
 
   const response = await fetch(
@@ -19,10 +21,11 @@ export async function POST(request: NextRequest) {
   );
 
   const blob = await response.blob();
-
   const headers = new Headers();
-
   headers.set("Content-Type", "image/*");
+
+  const end = Date.now();
+  console.log(`Request took ${end - start}ms`);
 
   return new NextResponse(blob, { status: 200, statusText: "OK", headers });
 }
