@@ -1,3 +1,4 @@
+import generateHuggingFaceImage from "@/utils/generate-image/hugging-face";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
@@ -5,18 +6,11 @@ export async function POST(request: NextRequest) {
 
   const req = await request.json();
 
-  const response = await fetch(
+  const blob = await generateHuggingFaceImage(
     "https://api-inference.huggingface.co/models/Corcelio/mobius",
-    {
-      headers: {
-        Authorization: "Bearer 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"
-      },
-      method: "POST",
-      body: JSON.stringify(req)
-    }
+    JSON.stringify(req.prompt)
   );
 
-  const blob = await response.blob();
   const headers = new Headers();
   headers.set("Content-Type", "image/*");
 
