@@ -11,7 +11,7 @@ export default async function generateHuggingFaceImage(
   });
 
   const blob = await response.blob();
-  console.log(blob);
 
+  console.log("response", response);
   return blob;
 }
