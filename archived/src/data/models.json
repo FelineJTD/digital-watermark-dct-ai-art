@@ -1,0 +1,10 @@
+[
+  {
+    "name": "Stable Diffusion",
+    "api": "stable-diffusion"
+  },
+  {
+    "name": "Mobius",
+    "api": "mobius"
+  }
+]
